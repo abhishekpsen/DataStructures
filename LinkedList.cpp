@@ -245,7 +245,22 @@ Node* Intersection(Node *list1,Node *list2){
 }
 
 Node* DetectLoop(Node *head){
+	Node *slow = head;
+	Node *fast = head;
 
+	while(slow != NULL && fast != NULL && fast->next != NULL){
+		slow = slow->next;
+		fast = fast->next->next;
+		if(fast == slow){
+			//Init slow to head and move slow and fast one place each
+			slow = head;
+			while(slow != fast){
+				slow = slow->next;
+				fast = fast->next;
+			}
+			return slow;
+		}
+	}
 	return NULL;
 }
 
@@ -319,11 +334,30 @@ int main(){
 	cout<<"Before removing dups"<<endl;
 	Print(sortedlist);
 
-	RemoveDupInSortedListBetter(sortedlist);
-	cout<<"After removing dups"<<endl;
+	//RemoveDupInSortedListBetter(sortedlist);
+	//cout<<"After removing dups"<<endl;
 
 	Print(sortedlist);
+
+	Node *head = new Node(1);
+	Node *second = new Node(2);
+	Node *third = new Node(3);
+	Node *fourth = new Node(4);
+	Node *fifth = new Node(5);
+	Node *sixth = new Node(6);
+	head->next = second;
+	second->next  =third;
+	third->next = fourth;
+	fourth->next = fifth;
+	fifth->next = sixth;
+	sixth->next = second;
 	
+	if(DetectLoop(head) != NULL){
+		cout<<"Loop found at "<<DetectLoop(head)->data<<endl;
+	}
+	else{
+		cout<<"No loop"<<endl;
+	}
 
 	return 0;
 }

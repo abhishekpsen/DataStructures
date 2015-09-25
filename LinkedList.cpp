@@ -264,6 +264,19 @@ Node* DetectLoop(Node *head){
 	return NULL;
 }
 
+void Reverse(Node* &head){
+	Node *current = head;
+	Node *nextnode = current->next;
+	Node *prevnode = NULL;
+	
+	while(current != NULL){
+		nextnode = current->next;
+		current->next = prevnode;
+		prevnode = current;
+		current = nextnode;
+	}
+	head = prevnode;
+}
 
 int main(){
 
@@ -337,6 +350,8 @@ int main(){
 	//RemoveDupInSortedListBetter(sortedlist);
 	//cout<<"After removing dups"<<endl;
 
+	Print(sortedlist);
+	Reverse(sortedlist);
 	Print(sortedlist);
 
 	Node *head = new Node(1);
